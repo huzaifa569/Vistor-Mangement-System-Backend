@@ -39,6 +39,8 @@ pics: String,
 
 
   purpose: { type: String, required: true },
+  company:{ type: String },
+  comments:{ type: String },
   agreed: String,
 
   hazards: [
