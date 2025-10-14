@@ -6,8 +6,8 @@ const sendEmail = async ({ to, subject, html, attachments = [] }) => {
   if (!subject) throw new Error("Email subject is required");
 
   // Use environment variables for security
-  const emailUser = process.env.EMAIL_USER;
-  const emailPass = process.env.EMAIL_PASSWORD;
+  const emailUser = "fatimafahad9080@gmail.com"
+  const emailPass = "jkfm kklz uwxx qoca"
 
   if (!emailUser || !emailPass) {
     throw new Error("Email credentials are not configured properly. Please set EMAIL_USER and EMAIL_PASSWORD environment variables.");
