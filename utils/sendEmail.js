@@ -8,13 +8,13 @@ const sendEmail = async ({to, subject, html, attachments}) => {
     const transport = nodemailer.createTransport({
         service: 'gmail',
         auth: {
-            user: process.env.EMAIL_USER,
-            pass: process.env.EMAIL_PASS,
+            user: "fatimafahad9080@gmail.com",
+            pass: "jkfm kklz uwxx qoca",
         },
     });
 
     await transport.sendMail({
-        from: `"VMS System" <${process.env.EMAIL_USER}>`,
+        from: `"VMS System" <fatimafahad9080@gmail.com>`,
         to,
         subject,
         html,
