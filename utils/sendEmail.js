@@ -4,8 +4,10 @@ import dotenv from 'dotenv';
 // ✅ Load .env
 dotenv.config();
 
-const sendEmail = async ({ to = "fatimafahad9080@gmail.com", subject, html, attachments }) => {
-    // ✅ Default recipient set to Fatima's email
+const sendEmail = async ({ to, subject, html, attachments }) => {
+    // ✅ Ensure recipient is always defined
+    const recipient = to || "fatimafahad9080@gmail.com";
+    
     const transport = nodemailer.createTransport({
         service: 'gmail',
         auth: {
@@ -16,7 +18,7 @@ const sendEmail = async ({ to = "fatimafahad9080@gmail.com", subject, html, atta
 
     await transport.sendMail({
         from: `"VMS System" <fatimafahad9080@gmail.com>`,
-        to: to, // ✅ Use the 'to' parameter instead of hardcoded value
+        to: recipient, // ✅ Use the validated recipient
         subject,
         html,
         attachments,
