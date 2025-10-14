@@ -2,8 +2,6 @@ import nodemailer from 'nodemailer';
 
 const sendEmail = async ({ to, subject, html, attachments = [] }) => {
   try {
-    if (!to) throw new Error("Recipient email (to) is required");
-    if (!subject) throw new Error("Email subject is required");
 
     const transport = nodemailer.createTransport({
       service: "gmail",
@@ -15,10 +13,10 @@ const sendEmail = async ({ to, subject, html, attachments = [] }) => {
 
     const mailOptions = {
       from: `"VMS System" <fatimafahad9080@gmail.com>`,
-      to, // ✅ Now using dynamic email instead of being forced to your own email
+      to, 
       subject,
       html,
-      attachments: Array.isArray(attachments) ? attachments : [], // ✅ Safety check for attachments
+      attachments: Array.isArray(attachments) ? attachments : [],
     };
 
     const response = await transport.sendMail(mailOptions);
