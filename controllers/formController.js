@@ -78,6 +78,8 @@ export const submitContractorForm = async (req, res) => {
       visitorCategory, siteLocation, department, hostEmployee,
       meetingLocation, visitStartDate, visitEndDate, purpose,
       agreed, hazards, ppe, pics, documents,
+       company,
+  comments
     } = req.body;
 
     console.log(pics)
@@ -133,6 +135,8 @@ export const submitContractorForm = async (req, res) => {
       visitStartDate,
       visitEndDate,
       purpose,
+      company,
+      comments,
       agreed,
       hazards: parsedHazards,
       ppe: parsedPPE,
