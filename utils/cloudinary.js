@@ -1,13 +1,9 @@
 import { v2 as cloudinary } from 'cloudinary';
-import dotenv from 'dotenv';
-
-// Load environment variables from .env
-dotenv.config();
 
 cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET,
+  cloud_name: 'dizxfdmk5',
+  api_key: '191371583446354',
+  api_secret: 'MHcwEsf8QpR9SteLESDzJ0VrCXI',
 });
 
 export const uploadToCloudinary = async (base64, folder = 'contractors') => {
