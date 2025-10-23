@@ -1,5 +1,5 @@
 import express from 'express';
-import { protect } from '../middleware/authMiddleware.js';
+import { protect , newprotect } from '../middleware/authMiddleware.js';
 import {
   updateAdminConfig,
   addEmployee,
@@ -55,7 +55,7 @@ router.post('/employees', protect, addEmployee);
 router.get('/dashboard', protect, getDashboardData);
 router.post('/visitors/:id/checkout', checkOutVisitor);
 router.post('/visitors/:id/check-in', checkInVisitor);
-router.get('/visitors/export', exportVisitorsToExcel);
+router.get('/visitors/export', newprotect,exportVisitorsToExcel);
 router.post('/schedulevisit', scheduleVisit);
 router.get('/qr/:id', generateQrCode);
 router.get('/validate-qr', validateQrCode);

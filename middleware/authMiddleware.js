@@ -15,6 +15,34 @@ export const protect = (req, res, next) => {
 };
 
 
+export const newprotect = async (req, res, next) => {
+  try {
+    const token = req.headers.authorization?.split(' ')[1];
+    
+    if (token) {
+      // Original code
+      const decoded = jwt.verify(token, JWT_SECRET);
+      const user = await User.findById(decoded.id).select('role');
+      req.user = {
+        _id: user._id,
+        role: user.role
+      };
+    } else {
+      // Testing ke liye hardcoded user
+      console.log('🟡 TEMPORARY: Using test user');
+      req.user = {
+        _id: '65d8f5a8e4b8d6a9c8f7e5a2',
+        role: 'admin'
+      };
+    }
+    
+    console.log('✅ User:', req.user);
+    next();
+  } catch (error) {
+    console.error('❌ Auth error:', error);
+    res.status(401).json({ error: 'Authentication failed' });
+  }
+};
 
 
 export const verifyToken = (req, res, next) => {
