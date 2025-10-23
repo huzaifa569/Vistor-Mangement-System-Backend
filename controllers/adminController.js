@@ -393,13 +393,48 @@ export const checkOutVisitor = async (req, res) => {
   }
 };
 
+// export const scheduleVisit = async (req, res) => {
+
+//   try {
+
+//     const visitor = await Schedule.create(req.body);
+
+//     await newVisit.save();
+
+//     if (visitor.email) {
+//       await sendEmail({
+//         to: visitor.email,
+//         subject: 'Visit Scheduled',
+//         html: `
+//           <p>Dear ${visitor.firstName} ${visitor.lastName},</p>
+//           <p>You have been scheduled for a meet.</p>
+//           <p>Visit Details:</p>
+//           <ul>
+//             <li><strong>Site:</strong> ${visitor.siteLocation}</li>
+//             <li><strong>Department:</strong> ${visitor.department}</li>
+//             <li><strong>Host:</strong> ${visitor.hostEmployee}</li>
+//             <li><strong>Location:</strong> ${visitor.meetingLocation}</li>
+//             <li><strong>Start:</strong> ${new Date(visitor.visitStartDate).toLocaleString()}</li>
+//             <li><strong>End:</strong> ${new Date(visitor.visitEndDate).toLocaleString()}</li>
+//             <li><strong>Purpose:</strong> ${visitor.purpose}</li>
+//           </ul>
+//           <p>Do well to maek your self available.</p>
+//         `
+//       })
+//     }
+
+//     res.status(201).json({ message: 'Visitor form submitted', visitor });
+//   } catch (error) {
+//     res.status(500).json({ error: error.message });
+//   }
+
+
+// };
+
 export const scheduleVisit = async (req, res) => {
-
   try {
-
     const visitor = await Schedule.create(req.body);
-
-    await newVisit.save();
+    // No need to call save() again since create() already saves to database
 
     if (visitor.email) {
       await sendEmail({
@@ -418,19 +453,16 @@ export const scheduleVisit = async (req, res) => {
             <li><strong>End:</strong> ${new Date(visitor.visitEndDate).toLocaleString()}</li>
             <li><strong>Purpose:</strong> ${visitor.purpose}</li>
           </ul>
-          <p>Do well to maek your self available.</p>
+          <p>Do well to make yourself available.</p>
         `
-      })
+      });
     }
 
     res.status(201).json({ message: 'Visitor form submitted', visitor });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
-
-
 };
-
 
 export const generateQrCode = async (req, res) => {
   try {
