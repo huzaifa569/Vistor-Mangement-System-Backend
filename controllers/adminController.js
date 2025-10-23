@@ -246,108 +246,17 @@ export const getByHost = async (req, res) => {
   }
 };
 
-// export const exportVisitorsToExcel = async (req, res) => {
-//   try {
-//     const user = req.user;
-
-//     let visitors;
-//     if (user.role === 'admin' || user.role === 'manager' || user.role === 'security') {
-//       visitors = await Visitor.find().sort({ createdAt: -1 });
-//     } else {
-//       visitors = await Visitor.find({ hostEmployeeId: user._id }).sort({ createdAt: -1 });
-//     }
-
-//     const workbook = new ExcelJS.Workbook();
-//     const worksheet = workbook.addWorksheet('Visitors');
-
-//     worksheet.columns = [
-//       { header: 'Full Name', key: 'fullName', width: 20 },
-//       { header: 'Email', key: 'email', width: 25 },
-//       { header: 'Company', key: 'company', width: 20 },
-//       { header: 'Purpose', key: 'purpose', width: 30 },
-//       { header: 'Department', key: 'department', width: 20 },
-//       { header: 'Status', key: 'status', width: 15 },
-//       { header: 'Check-In Time', key: 'checkInTime', width: 20 },
-//       { header: 'Check-Out Time', key: 'checkOutTime', width: 20 },
-//     ];
-
-//     visitors.forEach(visitor => {
-//       worksheet.addRow({
-//         fullName: visitor.fullName,
-//         email: visitor.email,
-//         company: visitor.company || '',
-//         purpose: visitor.purpose || '',
-//         department: visitor.department || '',
-//         status: visitor.status,
-//         checkInTime: visitor.checkInTime?.toISOString() || '',
-//         checkOutTime: visitor.checkOutTime?.toISOString() || '',
-//       });
-//       console.log('Added visitor to Excel:', visitor.fullName);
-//     });
-
-//     res.setHeader(
-//       'Content-Type',
-//       'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-//     );
-//     res.setHeader(
-//       'Content-Disposition',
-//       'attachment; filename=visitors.xlsx'
-//     );
-
-//     await workbook.xlsx.write(res);
-//     res.end();
-//   } catch (err) {
-//     console.error('Error exporting visitors to Excel:', err);
-//     res.status(500).json({ error: 'Failed to export visitors' });
-//   }
-// };
-
 export const exportVisitorsToExcel = async (req, res) => {
   try {
-    console.log('📊 Export request - User:', req.user);
-
     const user = req.user;
-    if (!user) {
-      return res.status(401).json({ error: 'Authentication required' });
-    }
-
-    // Safe role check
-    const userRole = user.role || 'user';
-    console.log('👤 User role:', userRole);
 
     let visitors;
-    if (userRole === 'admin' || userRole === 'manager' || userRole === 'security') {
+    if (user.role === 'admin' || user.role === 'manager' || user.role === 'security') {
       visitors = await Visitor.find().sort({ createdAt: -1 });
-      console.log(`✅ Admin access - Found ${visitors.length} visitors`);
     } else {
       visitors = await Visitor.find({ hostEmployeeId: user._id }).sort({ createdAt: -1 });
-      console.log(`✅ User access - Found ${visitors.length} visitors for host ${user._id}`);
     }
 
-    // ✅ TEMPORARY: JSON response for testing
-    console.log('🟡 TEMPORARY: Sending JSON response instead of Excel file');
-    
-    res.json({
-      success: true,
-      message: `Export successful - ${visitors.length} visitors found`,
-      data: visitors.map(visitor => ({
-        fullName: visitor.fullName,
-        email: visitor.email,
-        company: visitor.company,
-        purpose: visitor.purpose,
-        department: visitor.department,
-        status: visitor.status,
-        checkInTime: visitor.checkInTime,
-        checkOutTime: visitor.checkOutTime
-      })),
-      user: {
-        role: userRole,
-        _id: user._id
-      }
-    });
-
-    /*
-    // ❌ Original Excel code (comment karo)
     const workbook = new ExcelJS.Workbook();
     const worksheet = workbook.addWorksheet('Visitors');
 
@@ -386,10 +295,8 @@ export const exportVisitorsToExcel = async (req, res) => {
 
     await workbook.xlsx.write(res);
     res.end();
-    */
-    
   } catch (err) {
-    console.error('❌ Error exporting visitors to Excel:', err);
+    console.error('Error exporting visitors to Excel:', err);
     res.status(500).json({ error: 'Failed to export visitors' });
   }
 };
