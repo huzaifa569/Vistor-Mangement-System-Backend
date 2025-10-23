@@ -55,7 +55,7 @@ router.post('/employees', protect, addEmployee);
 router.get('/dashboard', protect, getDashboardData);
 router.post('/visitors/:id/checkout', checkOutVisitor);
 router.post('/visitors/:id/check-in', checkInVisitor);
-router.get('/visitors/export', exportVisitorsToExcel);
+router.get('/visitors/export',protect, exportVisitorsToExcel);
 router.post('/schedulevisit', scheduleVisit);
 router.get('/qr/:id', generateQrCode);
 router.get('/validate-qr', validateQrCode);
