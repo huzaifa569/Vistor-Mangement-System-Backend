@@ -12,7 +12,7 @@ const sendEmail = async ({ to, subject, html, attachments }) => {
         service: 'gmail',
         auth: {
             user: "fatimafahad9080@gmail.com",
-            pass: "tqgz lumk qshr gxyf",
+            pass: "xegd fdwo zbhs tfvn",
         },
     });
 
